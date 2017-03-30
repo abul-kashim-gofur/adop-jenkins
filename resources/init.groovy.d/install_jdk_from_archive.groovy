@@ -31,6 +31,7 @@ def jdk_archives = env['JDK_ARCHIVES']
 def jdk_archives_list = jdk_archives.split(',')
 def jdk_software_server = env['JDK_SOFTWARE_SERVER']
 def jdk_software_server_dir = env['JDK_SOFTWARE_SERVER_DIR']
+def jdk_extracted_archive_dir = env['JDK_EXTRACTED_ARCHIVE_DIR']
 
 // fetch Jenkins state
 def instance = Jenkins.getInstance()
@@ -46,13 +47,17 @@ Thread.start {
         archive = (String) it
         // create a ZipExtractionInstaller
         def url = jdk_software_server + '/' + jdk_software_server_dir + '/' + archive
-        def zip_extract_installer = new ZipExtractionInstaller('', url, '')
+	def jdk_name = strip_extension(archive)
+	def version = jdk_name.substring(4,5)
+	def subversion = jdk_name.substring(6,8)
+	def extracted_jdk = 'jdk1.' + version + '.0_' + subversion + '/'
+	def subdir = jdk_extracted_archive_dir + jdk_name + '/' + extracted_jdk
+        def zip_extract_installer = new ZipExtractionInstaller('', url, subdir)
         
         // create an InstallSourceProperty from ZipExtractionInstaller
         def install_source_property = new InstallSourceProperty([zip_extract_installer])
 
         // create a JDK from InstallSourceProperty
-        def jdk_name = strip_extension(archive)
         def jdk = new JDK(jdk_name,'', [install_source_property])
 
         // check if JDK installation exists
