@@ -32,7 +32,7 @@ Thread.start {
 
     println '--> Configuring matrix-based security'
     // https://github.com/jenkinsci/matrix-auth-plugin/blob/matrix-auth-1.2/src/main/java/hudson/security/GlobalMatrixAuthorizationStrategy.java
-    def strategy = new GlobalMatrixAuthorizationStrategy()
+    def strategy = new ProjectMatrixAuthorizationStrategy()
 
     // Permissions - http://javadoc.jenkins.io/archive/jenkins-1.609/hudson/security/Permission.html
     println '--> Configuring Permissions for Admin Groups'
