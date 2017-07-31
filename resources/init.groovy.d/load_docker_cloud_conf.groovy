@@ -25,13 +25,13 @@ import com.nirima.jenkins.plugins.docker.DockerTemplateBase;
  *  - DOCKER_PLUGIN_TEMPLATE_SSH_LAUNCH_TIMEOUT
  */
 
-environment_variables_list = ['DOCKER_PLUGIN_NAME', 'DOCKER_PLUGIN_URL', 'DOCKER_PLUGIN_CREDENTIALS', 'DOCKER_PLUGIN_CONNECTION_TIMEOUT', 'DOCKER_PLUGIN_READ_TIMEOUT', 'DOCKER_PLUGIN_CONTAINER_CAP', 'DOCKER_PLUGIN_TEMPLATE_ID', 'DOCKER_PLUGIN_TEMPLATE_LABELS', 'DOCKER_PLUGIN_TEMPLATE_CREDENTIALS', 'DOCKER_PLUGIN_TEMPLATE_REMOTE_FS_ROOT', 'DOCKER_PLUGIN_TEMPLATE_EXECUTORS_NUMBER', 'DOCKER_PLUGIN_TEMPLATE_IDLE_TERMINATION_TIME', 'DOCKER_PLUGIN_TEMPLATE_SSH_LAUNCH_TIMEOUT']
+environment_variables_list = ['DOCKER_PLUGIN_NAME', 'DOCKER_PLUGIN_URL', 'DOCKER_PLUGIN_CREDENTIALS', 'DOCKER_PLUGIN_CONNECTION_TIMEOUT', 'DOCKER_PLUGIN_READ_TIMEOUT', 'DOCKER_PLUGIN_CONTAINER_CAP', 'DOCKER_PLUGIN_TEMPLATE_ID' ,'DOCKER_PLUGIN_TEMPLATE_VOLUMES' ,'DOCKER_PLUGIN_TEMPLATE_LABELS', 'DOCKER_PLUGIN_TEMPLATE_CREDENTIALS', 'DOCKER_PLUGIN_TEMPLATE_REMOTE_FS_ROOT', 'DOCKER_PLUGIN_TEMPLATE_EXECUTORS_NUMBER', 'DOCKER_PLUGIN_TEMPLATE_IDLE_TERMINATION_TIME', 'DOCKER_PLUGIN_TEMPLATE_SSH_LAUNCH_TIMEOUT']
 def environment_variables_map = [:]
 
 // Stop executing the script if required environment variables are not specified.
 // Else store the environment variable value in a map
 def env = System.getenv()
-environment_variables_list.each { 
+environment_variables_list.each {
     def value = env["$it"]
     if (value == null) {
         // TODO(mihail): fix this to actually exit the script
@@ -53,9 +53,9 @@ Thread.start {
     // create a list of DockerTemplates
     def docker_templates_list = []
     for (i = 0; i < environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_ID').size(); i++) {
-        // constructor 
+        // constructor
         // https://docs.docker.com/engine/reference/run/#/runtime-constraints-on-resources
-        def docker_template_base = new DockerTemplateBase(environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_ID')[i], '', '', '', '', '', '', '', new Integer(1000), new Integer(1000), new Integer(0), '', false, false, false, '')
+        def docker_template_base = new DockerTemplateBase(environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_ID')[i], '', '', '', environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_VOLUMES')[0], '', '', '', new Integer(1000), new Integer(1000), new Integer(0), '', false, false, false, '')
 
         def docker_template = new DockerTemplate(docker_template_base, environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_LABELS')[i], environment_variables_map.get('DOCKER_PLUGIN_TEMPLATE_REMOTE_FS_ROOT')[i], '', '')
 
