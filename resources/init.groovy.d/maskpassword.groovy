@@ -12,20 +12,16 @@ import com.cloudbees.plugins.credentials.*;
 def env = System.getenv()
 
 //maskpasswordvars contains all the variables which holds the passwords and are comma seperated
-def maskPasswordVars = env['MASKPASSWORDVARS']
+def maskPasswordVars = env['JENKINS_MASK_PASSWORD_VARS']
 def maskPasswordVarsList = maskPasswordVars.split(',')
 
-def maskPassword = env['MASKPASSWORD']
-
 println "Configuring Global Mask Password"
-//Define Credentials Parameter checkbox
+//Define + enable Global mask passwords plugin (this will mark the mask passwords checkbox in Manage Jenkins)
 def globalVarPasswordPairs = new MaskPasswordsConfig().getInstance()
 globalVarPasswordPairs.addMaskedPasswordParameterDefinition("com.cloudbees.plugins.credentials.CredentialsParameterDefinition")
 
-//Retriveing existing password pairs
+//Retrieve existing password pairs currently set in Manage Jenkins
 existingPasswordPairs = globalVarPasswordPairs.getGlobalVarPasswordPairs()
-
-//Define + print list of existing variables
 def currentPasswordPairs = []
 for (ePasswordPair in existingPasswordPairs) {
   currentPasswordPairs += ePasswordPair.getVar() 
@@ -43,7 +39,7 @@ for (ePasswordPair in existingPasswordPairs) {
       {
         println "Adding this var: $maskPasswordPair"
         //Building the new password pairs to be added and adding them
-        listPasswordsPairsToMask = new MaskPasswordsBuildWrapper.VarPasswordPair(maskPasswordPair, maskPassword)
+        listPasswordsPairsToMask = new MaskPasswordsBuildWrapper.VarPasswordPair(maskPasswordPair, env[maskPasswordPair])
         globalVarPasswordPairs.addGlobalVarPasswordPair(listPasswordsPairsToMask)
       }
     }
