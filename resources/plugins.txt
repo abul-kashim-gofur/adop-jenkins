@@ -3,7 +3,7 @@ docker-build-step:1.35
 copyartifact:1.38.1
 handlebars:1.1.1
 performance:1.14
-credentials:2.1.5
+credentials:2.1.7
 matrix-project:1.7.1
 authentication-tokens:1.3
 versionnumber:1.7.2
@@ -14,7 +14,7 @@ token-macro:2.0
 docker-commons:1.4.1
 junit:1.18
 role-strategy:2.3.2
-plain-credentials:1.2
+plain-credentials:1.3
 gatling:1.2.0
 javadoc:1.4
 environment-dashboard:1.1.4
@@ -32,7 +32,7 @@ codescanner:0.11
 jdepend:1.2.4
 nodejs:0.2.1
 icon-shim:2.0.3
-structs:1.5
+structs:1.7
 build-name-setter:1.6.5
 sonar:2.4.4
 branch-api:1.11
@@ -74,7 +74,7 @@ ws-cleanup:0.30
 nested-view:1.14
 jenkinswalldisplay:0.6.30
 cucumber-reports:2.8.0
-credentials-binding:1.9
+credentials-binding:1.16
 jobConfigHistory:2.15
 job-dsl:1.48
 cvs:2.12
@@ -134,7 +134,7 @@ workflow-job:2.7
 workflow-api:2.4
 workflow-cps:2.18
 workflow-support:2.6
-workflow-step-api:2.4
+workflow-step-api:2.10
 workflow-scm-step:2.2
 workflow-aggregator:2.4
 workflow-basic-steps:2.2
